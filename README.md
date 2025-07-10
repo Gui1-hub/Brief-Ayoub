@@ -83,8 +83,16 @@ az sql db create \
   --name prod-db \
   --service-objective S0
 ```
+### Redis Cache
+```bash
+az redis create \
+  --name techmart-cache-$(whoami) \
+  --resource-group GAE-lab \
+  --location "France Central" \
+  --sku Basic \
+  --vm-size c0
 
-### App Service + déploiement
+### App Service + déploiement de l'API
 ```bash
 az appservice plan create \
   --name app-plan-prod \
