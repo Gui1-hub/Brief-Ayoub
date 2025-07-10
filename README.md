@@ -32,8 +32,11 @@ Ces métriques doivent être visualisables dans **Azure Monitor** et **Applicati
 - **Utiliser les services PaaS** (App Service, Azure SQL, Redis) plutôt que du IaaS (VMs) pour éviter la maintenance et réduire les frais fixes.
 - **Choisir des plans tarifaires adaptés** à la charge réelle (ex. S0 pour SQL, B1 pour App Service, Basic pour Redis).
 - **Automatiser l’arrêt des environnements de test** ou de staging pendant les heures creuses.
+- **Activer la mise en veille automatique** des ressources non sollicitées.
 - **Surveiller les coûts avec Azure Cost Management** et créer des alertes budgétaires.
 - **Limiter la redondance non critique** : éviter la haute disponibilité sur des services de test.
+
+L’objectif est de **scaler intelligemment** uniquement les composants nécessaires en production, et d’**éteindre tout le reste**.
 
 ## Architecture (exemple à adapter)
 
@@ -138,24 +141,18 @@ REDIS_HOST
 APPINSIGHTS_INSTRUMENTATIONKEY
 ```
 
-![](images/variables.pnj)
+*(Screenshots à insérer depuis le portail Azure)*
 
 ## Base de données – Script SQL
 
 ```sql
-CCREATE TABLE Payments (
-    PaymentId int IDENTITY(1,1) PRIMARY KEY,
-    Amount decimal(10,2) NOT NULL,
-    Currency nvarchar(3) NOT NULL,
-    MerchantId nvarchar(50) NOT NULL,
-    Status nvarchar(20) NOT NULL,
-    CreatedAt datetime2 NOT NULL DEFAULT GETDATE()
-);
-
-CREATE INDEX IX_Payments_MerchantId_CreatedAt ON Payments(MerchantId, CreatedAt);
+CREATE TABLE Logs (
+  LogId INT IDENTITY(1,1) PRIMARY KEY,
+  Message NVARCHAR(255) NOT NULL,
+  Level NVARCHAR(50),
+  Timestamp DATETIME2 DEFAULT GETDATE()
 );
 ```
-
 
 ## Déploiement de l'application
 
@@ -165,15 +162,13 @@ npm install --production
 zip -r app.zip index.js package.json .deployment
 ```
 
-### Déploiement depuis le cloud shell
+### Déploiement depuis PowerShell
 ```bash
 az webapp deploy `
   --resource-group GAE-lab `
   --name prod-api-$(whoami) `
   --src-path "C:\chemin\vers\app.zip"
 ```
-![](images/deploiement.pnj)
-![](images/verif-dep.pnj)
 
 ## Nettoyage
 ```bash
