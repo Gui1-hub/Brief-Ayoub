@@ -144,8 +144,8 @@ Proxy d’affinité de session
 HTTPS uniquement
 Débogage distant
 
-3. Server SQL puis Sécurité puis Mise en réseau :
-Ajout de règle pour autoriser l'adresse IP
+3. Server SQL puis Sécurité puis Mise en réseau :  
+Ajout de règle pour autoriser l'adresse IP  
 Cocher Autoriser les services et les ressources Azure à accéder à ce serveur
  ![](images/mise-reseau.png)
 
