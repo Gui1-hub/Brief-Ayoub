@@ -135,7 +135,7 @@ az monitor metrics alert create \
 
 
 ## Tweak dans l'interface graphique
-``̀ bash
+
 1. Vérification de l'intégrité
 ![](images/health.png)
 
@@ -148,7 +148,7 @@ Débogage distant
 Ajout de règle pour autoriser l'adresse IP
 Cocher Autoriser les services et les ressources Azure à accéder à ce serveur
  ![](images/mise-reseau.png)
- 
+
 ## Variables d'environnement
 
 ```bash
