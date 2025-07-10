@@ -91,6 +91,7 @@ az redis create \
   --location "France Central" \
   --sku Basic \
   --vm-size c0
+```
 
 ### App Service + déploiement de l'API
 ```bash
