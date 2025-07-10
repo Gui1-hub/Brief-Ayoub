@@ -1,6 +1,6 @@
 # Déploiement Azure Production avec Monitoring
 
-## 🔍 Objectif
+## Objectif
 
 Déployer une infrastructure Azure de production avec monitoring avancé, en tenant compte de la montée en charge et des contraintes budgétaires. Ce projet simule une mission DevOps réaliste, incluant supervision, sécurité et bonnes pratiques de déploiement.
 
@@ -129,7 +129,6 @@ az monitor metrics alert create \
   --window-size 5m \
   --severity 0
 ```
-
 ## Variables d'environnement
 
 ```bash
@@ -140,8 +139,7 @@ DB_SERVER
 REDIS_HOST
 APPINSIGHTS_INSTRUMENTATIONKEY
 ```
-
-*(Screenshots à insérer depuis le portail Azure)*
+![](/images/variables.png)
 
 ## Base de données – Script SQL
 
