@@ -36,8 +36,6 @@ Ces métriques doivent être visualisables dans **Azure Monitor** et **Applicati
 - **Surveiller les coûts avec Azure Cost Management** et créer des alertes budgétaires.
 - **Limiter la redondance non critique** : éviter la haute disponibilité sur des services de test.
 
-L’objectif est de **scaler intelligemment** uniquement les composants nécessaires en production, et d’**éteindre tout le reste**.
-
 ## Architecture (exemple à adapter)
 
 ```
@@ -55,11 +53,6 @@ L’objectif est de **scaler intelligemment** uniquement les composants nécessa
 ```
 
 ## Choix techniques et justifications
-
-### Pourquoi choisir **Azure App Service** ?
-- Déploiement rapide et scalable
-- Intégration native avec GitHub Actions / Azure DevOps
-- Support du monitoring via Application Insights
 
 ### Pourquoi utiliser **Redis Cache** ?
 | Cas d’usage                            | Redis ? |
@@ -103,7 +96,7 @@ az webapp create \
   --name prod-api-$(whoami) \
   --plan app-plan-prod \
   --resource-group GAE-lab \
-  --runtime "NODE|18-lts"
+  --runtime "NODE|20-lts"
 ```
 
 ## Monitoring et alertes
@@ -117,7 +110,7 @@ az monitor app-insights component create \
   --application-type web
 ```
 
-### Exemple d’alerte : erreurs critiques
+### Alerte sur erreur paiement
 ```bash
 az monitor metrics alert create \
   --name "Prod Payment Errors" \
@@ -129,6 +122,8 @@ az monitor metrics alert create \
   --window-size 5m \
   --severity 0
 ```
+![](images/Payment%20Failures%20Critical.png)
+
 ## Variables d'environnement
 
 ```bash
@@ -144,12 +139,16 @@ APPINSIGHTS_INSTRUMENTATIONKEY
 ## Base de données – Script SQL
 
 ```sql
-CREATE TABLE Logs (
-  LogId INT IDENTITY(1,1) PRIMARY KEY,
-  Message NVARCHAR(255) NOT NULL,
-  Level NVARCHAR(50),
-  Timestamp DATETIME2 DEFAULT GETDATE()
+CREATE TABLE Payments (
+    PaymentId int IDENTITY(1,1) PRIMARY KEY,
+    Amount decimal(10,2) NOT NULL,
+    Currency nvarchar(3) NOT NULL,
+    MerchantId nvarchar(50) NOT NULL,
+    Status nvarchar(20) NOT NULL,
+    CreatedAt datetime2 NOT NULL DEFAULT GETDATE()
 );
+
+CREATE INDEX IX_Payments_MerchantId_CreatedAt ON Payments(MerchantId, CreatedAt);
 ```
 
 ## Déploiement de l'application
@@ -160,13 +159,15 @@ npm install --production
 zip -r app.zip index.js package.json .deployment
 ```
 
-### Déploiement depuis PowerShell
+### Déploiement depuis Azure cloud shell
 ```bash
 az webapp deploy `
   --resource-group GAE-lab `
   --name prod-api-$(whoami) `
   --src-path "C:\chemin\vers\app.zip"
 ```
+![](images/deploiement.png)
+![](images/verif-dep.png)
 
 ## Nettoyage
 ```bash
