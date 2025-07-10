@@ -205,7 +205,7 @@ wait
 
 ![](images/payments-completed.png)
 ![](images/live-metrics.png)
-![](images/app-insight-views)
+![](images/app-insight-views.png)
 ```
 
 ## Nettoyage
