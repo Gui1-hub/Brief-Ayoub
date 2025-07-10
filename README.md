@@ -202,11 +202,10 @@ for i in {1..50}; do
     -d '{"amount":100,"currency":"EUR","merchantId":"MERCHANT_$i"}' &
 done
 wait
-
+```
 ![](images/payments-completed.png)
 ![](images/live-metrics.png)
 ![](images/app-insight-views.png)
-```
 
 ## Nettoyage
 ```bash
