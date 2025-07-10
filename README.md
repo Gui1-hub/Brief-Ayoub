@@ -194,6 +194,20 @@ az webapp deploy `
 ![](images/deploiement.png)
 ![](images/verif-dep.png)
 
+### Tests
+```bash
+for i in {1..50}; do
+  curl -X POST https://techmart-payments-$(whoami).azurewebsites.net/api/payments \
+    -H "Content-Type: application/json" \
+    -d '{"amount":100,"currency":"EUR","merchantId":"MERCHANT_$i"}' &
+done
+wait
+
+![](images/payments-completed.png)
+![](images/live-metrics.png)
+![](images/app-insight-views)
+```
+
 ## Nettoyage
 ```bash
 az group delete --name GAE-lab --yes --no-wait
