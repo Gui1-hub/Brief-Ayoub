@@ -204,8 +204,7 @@ done
 wait
 ```
 ![](images/payments-completed.png)
-![](images/live-metrics.png)
-![](images/app-insight-views.png)
+![](images/Capture%20d’écran%20du%202025-07-10%2014-44-55.png)
 
 ## Nettoyage
 ```bash
