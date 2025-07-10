@@ -133,6 +133,22 @@ az monitor metrics alert create \
 ```
 ![](images/Payment%20Failures%20Critical.png)
 
+
+## Tweak dans l'interface graphique
+``̀ bash
+1. Vérification de l'intégrité
+![](images/health.png)
+
+2. Dans la configuration de l'App, tout activer sauf :
+Proxy d’affinité de session
+HTTPS uniquement
+Débogage distant
+
+3. Server SQL > Sécurité > Mise en réseau :
+Ajout de règle pour autoriser l'adresse IP
+Cocher Autoriser les services et les ressources Azure à accéder à ce serveur
+ ![](images/mise-reseau.png)
+ 
 ## Variables d'environnement
 
 ```bash
