@@ -225,4 +225,3 @@ az group delete --name GAE-lab --yes --no-wait
 ## Réutilisation en production réelle
 
 - Automatiser via un pipeline CI/CD
-- Intégrer Azure Key Vault pour les secrets
