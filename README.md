@@ -211,6 +211,7 @@ wait
 ### Script de déploiement + Variable dans le Vault
 
 - Chargement des variables depuis le Key Vault
+![variables dans le vault en secret](images/vault.png)
 - Création du **groupe de ressources**
 - Déploiement des services :
   - **Serveur SQL** + **base de données**
@@ -219,8 +220,6 @@ wait
   - **WebApp Node.js (20 LTS)**
   - **Application Insights** (supervision)
 - Configuration d’une **alerte critique** (plus de 5 erreurs en 5 min)
-
-![variables dans le vault en secret](images/vault.png)
 
 ### Création d'un private endpoint à la base de données Azure
 
