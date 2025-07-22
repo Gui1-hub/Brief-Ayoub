@@ -210,7 +210,7 @@ wait
 
 ### Script de déploiement + Variable dans le Vault
 
-- Chargement des variables depuis le Key Vault
+- Chargement des variables depuis le Vault
 ![variables dans le vault en secret](images/vault.png)
 - Création du **groupe de ressources**
 - Déploiement des services :
