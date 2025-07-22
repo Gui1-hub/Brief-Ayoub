@@ -206,10 +206,51 @@ wait
 ![](images/payments-completed.png)
 ![](images/Capture%20d’écran%20du%202025-07-10%2014-44-55.png)
 
-## Nettoyage
-```bash
-az group delete --name GAE-lab --yes --no-wait
-```
+## Bonus
+
+### Script de déploiement + Variable dans le Vault
+
+- Chargement des variables depuis le Key Vault
+- Création du **groupe de ressources**
+- Déploiement des services :
+  - **Serveur SQL** + **base de données**
+  - **Instance Redis Cache**
+  - **App Service Plan Linux**
+  - **WebApp Node.js (20 LTS)**
+  - **Application Insights** (supervision)
+- Configuration d’une **alerte critique** (plus de 5 erreurs en 5 min)
+
+! [](images/vault.png)
+
+### Création d'un private endpoint à la base de données Azure
+
+Dans le but de renforcer la sécurité de la communication entre ma Web App et la base de données Azure SQL, j’ai mis en place un Private Endpoint. Cela permet de désactiver complètement l’accès public à la base tout en autorisant l’accès depuis un réseau privé (VNet).
+L'objectif étant de garantir que la base de données ne soit plus accessible via Internet, et que seuls les services hébergés dans mon Virtual Network Azure puissent y accéder.
+
+1. **Création d’un réseau virtuel (VNet) et de deux sous-réseaux** dans mon groupe de ressources :
+   - VNet : `test-francecentral-vnet-webapp`
+   ![](images/réseau.png)
+   - Sous-réseau `test-francecentral-subnet` avec la plage `192.168.0.0/24`, réservé aux **Private Endpoints**
+   - Sous-réseau `test-francecentral-subnet-webapp` avec la plage `192.168.1.0/24`, réservé à l’**intégration VNet de l’App Service**
+![](images/sous%20réseau.png)
+
+2. **Création d’un Private Endpoint** sur le serveur SQL Azure (`techmart-sql-guilhem`) :
+   - Ressource ciblée : `sqlServer`
+   - Sous-réseau utilisé : `test-francecentral-subnet` (`192.168.0.0/24`)
+   - Résolution DNS automatique via la zone privée `privatelink.database.windows.net`
+![](images/privateend.png)
+
+3. **Désactivation de l’accès public** :
+   - Activation de l’option `Deny public network access` sur le serveur SQL
+   - Suppression des règles de pare-feu autorisant les IPs publiques
+
+4. **Connexion de la Web App au VNet Azure** :
+   - Intégration réseau de l’App Service (`techmart-payments-guilhem`)
+   - Utilisation du sous-réseau `test-francecentral-subnet-webapp` (`192.168.1.0/24`)
+
+5. **Redémarrage de l’application** pour appliquer la configuration réseau :
+   - La Web App résout désormais le nom de la base vers une **adresse IP privée**
+   - La communication avec la base se fait **via le Private Endpoint**
 
 ## Apports de ce projet
 
