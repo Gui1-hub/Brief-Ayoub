@@ -220,7 +220,7 @@ wait
   - **Application Insights** (supervision)
 - Configuration d’une **alerte critique** (plus de 5 erreurs en 5 min)
 
-![](images/vault.png)
+![variables dans le vault en secret](images/vault.png)
 
 ### Création d'un private endpoint à la base de données Azure
 
