@@ -231,13 +231,15 @@ L'objectif étant de garantir que la base de données ne soit plus accessible vi
    - VNet : `test-francecentral-vnet-webapp`
    ![](images/réseau.png)
    - Sous-réseau `test-francecentral-subnet` avec la plage `192.168.0.0/24`, réservé aux **Private Endpoints**
-   - Sous-réseau `test-francecentral-subnet-webapp` avec la plage `192.168.1.0/24`, réservé à l’**intégration VNet de l’App Service**
+   - Sous-réseau `test-francecentral-subnet-webapp` avec la plage `192.168.1.0/24`, réservé à **l'intégration VNet de l’App Service**
+
 ![](images/sous%20réseau.png)
 
 2. **Création d’un Private Endpoint** sur le serveur SQL Azure (`techmart-sql-guilhem`) :
    - Ressource ciblée : `sqlServer`
    - Sous-réseau utilisé : `test-francecentral-subnet` (`192.168.0.0/24`)
    - Résolution DNS automatique via la zone privée `privatelink.database.windows.net`
+   
 ![](images/privateend.png)
 
 3. **Désactivation de l’accès public** :
